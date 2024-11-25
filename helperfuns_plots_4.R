@@ -29,11 +29,11 @@ stacked_plot <- function(df, variable, fill_vars, facet_vars=NULL, facet_wrap=FA
       
       p <- if (is.factor(index)| is.logical(index)) {
         p1 <- if (rotate_axis == TRUE) {
-          ggplot(data=df, aes(x= forcats::fct_rev(index), fill = forcats::fct_rev(forcats::fct_infreq(index_fill)),
+          ggplot(data=df, aes(x= forcats::fct_rev(index), fill = forcats::fct_infreq(index_fill),
                               by = forcats::fct_rev(index))
                  ) +
             coord_flip() 
-        } else { ggplot(data=df, aes(x=index, fill = forcats::fct_rev(forcats::fct_infreq(index_fill)),
+        } else { ggplot(data=df, aes(x=index, fill = forcats::fct_infreq(index_fill),
                                      by = index)
                         )  
         }
@@ -109,11 +109,11 @@ stacked_plot <- function(df, variable, fill_vars, facet_vars=NULL, facet_wrap=FA
       
       p <- if (is.factor(index)| is.logical(index)) {
         p1 <- if (rotate_axis == TRUE) {
-          ggplot(data=df, aes(x= forcats::fct_rev(index), fill = forcats::fct_rev(forcats::fct_infreq(index_fill)),
+          ggplot(data=df, aes(x= forcats::fct_rev(index), fill = forcats::fct_infreq(index_fill),
                               by = forcats::fct_rev(index))
                  ) +
             coord_flip() 
-        } else { ggplot(data=df, aes(x=index, fill = forcats::fct_rev(forcats::fct_infreq(index_fill)),
+        } else { ggplot(data=df, aes(x=index, fill = forcats::fct_infreq(index_fill),
                                      by = index)
                         )  
         }
