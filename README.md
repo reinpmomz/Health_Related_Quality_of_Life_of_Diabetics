@@ -16,7 +16,7 @@ The data used for analysis can be accessed through [**APHRC Microdata portal**](
 
 ## Materials
 
-The `wdf_baseline_recode_file.xlsx` file contains: 
+- The `wdf_baseline_recode_file.xlsx` file contains: 
     
     1. MetaData about study in the _study_title_ sheet.
     
