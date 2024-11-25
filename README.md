@@ -13,6 +13,8 @@ We are assuming you have `R Software` and `Rstudio IDE` installed. If not you ca
 
 The data used for analysis can be accessed through [**APHRC Microdata portal**](https://microdataportal.aphrc.org/index.php/catalog/75) upon proper approvals.
 
+- **Data used for analysis:** `wdfbaseline_cleaned.dta`
+
 
 ## Materials
 
