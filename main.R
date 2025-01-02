@@ -71,7 +71,10 @@ source("check_normality_distribution.R")
 ### Select variables required for modelling
 source("modelling_data.R")
 
-### handle single value variables, missing values and high correlated variables
+### Feature selection - filter method
+source("feature_selection.R")
+
+### handle single value variables and missing values
 source("data_preparation_base.R")
 
 ### Train-test split, up-sampling and down-sampling

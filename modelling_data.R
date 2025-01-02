@@ -33,6 +33,9 @@ model_form <- sapply(outcome_vars, function(x) {
 ## correlation cutoff
 corr_threshold <- model_params_df$corr_threshold
 
+## effectsize cutoff
+effectsize_threshold <- model_params_df$effect_size_threshold
+
 ## folds
 nfolds <- model_params_df$folds
 

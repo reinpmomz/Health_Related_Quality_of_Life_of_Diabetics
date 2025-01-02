@@ -40,6 +40,8 @@ effectsize_corr_table <- function(df, by_vars) {
     sapply(by_vars[by_vars %in% factor_character_vars], function(x) {
       nn <- x
       
+      level_by_vars <- length(unique(df_new[[nn]]))
+      
       effect_size1 <- sapply(factor_character_vars[!factor_character_vars %in% nn], function(y) {
         rstatix::cramer_v(df_new[[y]], df_new[[nn]])
         }, simplify = TRUE
@@ -49,9 +51,11 @@ effectsize_corr_table <- function(df, by_vars) {
                                     ,variables = factor_character_vars[!factor_character_vars %in% nn]
                                     )
       
-      effect_size2 <- sapply(numeric_integer_vars, function(y) {
+      if (level_by_vars == 2) {
+        
+        effect_size2 <- sapply(numeric_integer_vars, function(y) {
         df_new %>%
-          rstatix::cohens_d(as.formula(paste(y, "~", nn)))
+          rstatix::wilcox_effsize(as.formula(paste(y, "~", nn)))
       }, simplify = FALSE
       )
       
@@ -60,8 +64,24 @@ effectsize_corr_table <- function(df, by_vars) {
       #effect_size2_df <- effect_size2_output %>% tidyr::unnest() ## When simplify is TRUE
       
       effect_size2_df$outcome <- nn
-      effect_size2_df$type <- "cohens_d"
+      effect_size2_df$type <- "wilcoxon"
       effect_size2_df$variables <- numeric_integer_vars
+      } else if (level_by_vars > 2) {
+        effect_size2 <- sapply(numeric_integer_vars, function(y) {
+          df_new %>%
+            rstatix::kruskal_effsize(as.formula(paste(y, "~", nn)))
+        }, simplify = FALSE
+        )
+        
+        effect_size2_df <- data.table::rbindlist(effect_size2)
+        #effect_size2_output <- data.frame(t(effect_size2)) ## When simplify is TRUE
+        #effect_size2_df <- effect_size2_output %>% tidyr::unnest() ## When simplify is TRUE
+        
+        effect_size2_df$outcome <- nn
+        effect_size2_df$type <- "kruskal-wallis"
+        effect_size2_df$variables <- numeric_integer_vars
+        
+      }
       
       effect_size_df <- dplyr::bind_rows(effect_size1_df, effect_size2_df) %>%
         tibble::remove_rownames() %>%
@@ -127,6 +147,8 @@ effectsize_corr_table <- function(df, by_vars) {
       sapply(by_vars[by_vars %in% factor_character_vars], function(x) {
         nn <- x
         
+        level_by_vars <- length(unique(df_new[[nn]]))
+        
         effect_size1 <- sapply(factor_character_vars[!factor_character_vars %in% nn], function(y) {
           rstatix::cramer_v(df_new[[y]], df_new[[nn]])
         }, simplify = TRUE
@@ -136,19 +158,37 @@ effectsize_corr_table <- function(df, by_vars) {
                                       ,variables = factor_character_vars[!factor_character_vars %in% nn]
         )
         
-        effect_size2 <- sapply(numeric_integer_vars, function(y) {
-          df_new %>%
-            rstatix::cohens_d(as.formula(paste(y, "~", nn)))
-        }, simplify = FALSE
-        )
-        
-        effect_size2_df <- data.table::rbindlist(effect_size2)
-        #effect_size2_output <- data.frame(t(effect_size2)) ## When simplify is TRUE
-        #effect_size2_df <- effect_size2_output %>% tidyr::unnest() ## When simplify is TRUE
-        
-        effect_size2_df$outcome <- nn
-        effect_size2_df$type <- "cohens_d"
-        effect_size2_df$variables <- numeric_integer_vars
+        if (level_by_vars == 2) {
+          
+          effect_size2 <- sapply(numeric_integer_vars, function(y) {
+            df_new %>%
+              rstatix::wilcox_effsize(as.formula(paste(y, "~", nn)))
+          }, simplify = FALSE
+          )
+          
+          effect_size2_df <- data.table::rbindlist(effect_size2)
+          #effect_size2_output <- data.frame(t(effect_size2)) ## When simplify is TRUE
+          #effect_size2_df <- effect_size2_output %>% tidyr::unnest() ## When simplify is TRUE
+          
+          effect_size2_df$outcome <- nn
+          effect_size2_df$type <- "wilcoxon"
+          effect_size2_df$variables <- numeric_integer_vars
+        } else if (level_by_vars > 2) {
+          effect_size2 <- sapply(numeric_integer_vars, function(y) {
+            df_new %>%
+              rstatix::kruskal_effsize(as.formula(paste(y, "~", nn)))
+          }, simplify = FALSE
+          )
+          
+          effect_size2_df <- data.table::rbindlist(effect_size2)
+          #effect_size2_output <- data.frame(t(effect_size2)) ## When simplify is TRUE
+          #effect_size2_df <- effect_size2_output %>% tidyr::unnest() ## When simplify is TRUE
+          
+          effect_size2_df$outcome <- nn
+          effect_size2_df$type <- "kruskal-wallis"
+          effect_size2_df$variables <- numeric_integer_vars
+          
+        }
         
         effect_size_df <- dplyr::bind_rows(effect_size1_df, effect_size2_df) %>%
           tibble::remove_rownames() %>%
@@ -203,19 +243,39 @@ effectsize_corr_table <- function(df, by_vars) {
         sapply(by_vars[by_vars %in% factor_character_vars], function(x) {
           nn <- x
           
-          effect_size2 <- sapply(numeric_integer_vars, function(y) {
-            df_new %>%
-              rstatix::cohens_d(as.formula(paste(y, "~", nn)))
-          }, simplify = FALSE
-          )
+          level_by_vars <- length(unique(df_new[[nn]]))
           
-          effect_size2_df <- data.table::rbindlist(effect_size2)
-          #effect_size2_output <- data.frame(t(effect_size2)) ## When simplify is TRUE
-          #effect_size2_df <- effect_size2_output %>% tidyr::unnest() ## When simplify is TRUE
-          
-          effect_size2_df$outcome <- nn
-          effect_size2_df$type <- "cohens_d"
-          effect_size2_df$variables <- numeric_integer_vars
+          if (level_by_vars == 2) {
+            
+            effect_size2 <- sapply(numeric_integer_vars, function(y) {
+              df_new %>%
+                rstatix::wilcox_effsize(as.formula(paste(y, "~", nn)))
+            }, simplify = FALSE
+            )
+            
+            effect_size2_df <- data.table::rbindlist(effect_size2)
+            #effect_size2_output <- data.frame(t(effect_size2)) ## When simplify is TRUE
+            #effect_size2_df <- effect_size2_output %>% tidyr::unnest() ## When simplify is TRUE
+            
+            effect_size2_df$outcome <- nn
+            effect_size2_df$type <- "wilcoxon"
+            effect_size2_df$variables <- numeric_integer_vars
+          } else if (level_by_vars > 2) {
+            effect_size2 <- sapply(numeric_integer_vars, function(y) {
+              df_new %>%
+                rstatix::kruskal_effsize(as.formula(paste(y, "~", nn)))
+            }, simplify = FALSE
+            )
+            
+            effect_size2_df <- data.table::rbindlist(effect_size2)
+            #effect_size2_output <- data.frame(t(effect_size2)) ## When simplify is TRUE
+            #effect_size2_df <- effect_size2_output %>% tidyr::unnest() ## When simplify is TRUE
+            
+            effect_size2_df$outcome <- nn
+            effect_size2_df$type <- "kruskal-wallis"
+            effect_size2_df$variables <- numeric_integer_vars
+            
+          }
           
           effect_size_df <- effect_size2_df %>%
             tibble::remove_rownames() %>%
@@ -352,19 +412,39 @@ effectsize_corr_table <- function(df, by_vars) {
               sapply(by_vars[by_vars %in% factor_character_vars], function(x) {
                 nn <- x
                 
-                effect_size2 <- sapply(numeric_integer_vars, function(y) {
-                  df_new %>%
-                    rstatix::cohens_d(as.formula(paste(y, "~", nn)))
-                }, simplify = FALSE
-                )
+                level_by_vars <- length(unique(df_new[[nn]]))
                 
-                effect_size2_df <- data.table::rbindlist(effect_size2)
-                #effect_size2_output <- data.frame(t(effect_size2)) ## When simplify is TRUE
-                #effect_size2_df <- effect_size2_output %>% tidyr::unnest() ## When simplify is TRUE
-                
-                effect_size2_df$outcome <- nn
-                effect_size2_df$type <- "cohens_d"
-                effect_size2_df$variables <- numeric_integer_vars
+                if (level_by_vars == 2) {
+                  
+                  effect_size2 <- sapply(numeric_integer_vars, function(y) {
+                    df_new %>%
+                      rstatix::wilcox_effsize(as.formula(paste(y, "~", nn)))
+                  }, simplify = FALSE
+                  )
+                  
+                  effect_size2_df <- data.table::rbindlist(effect_size2)
+                  #effect_size2_output <- data.frame(t(effect_size2)) ## When simplify is TRUE
+                  #effect_size2_df <- effect_size2_output %>% tidyr::unnest() ## When simplify is TRUE
+                  
+                  effect_size2_df$outcome <- nn
+                  effect_size2_df$type <- "wilcoxon"
+                  effect_size2_df$variables <- numeric_integer_vars
+                } else if (level_by_vars > 2) {
+                  effect_size2 <- sapply(numeric_integer_vars, function(y) {
+                    df_new %>%
+                      rstatix::kruskal_effsize(as.formula(paste(y, "~", nn)))
+                  }, simplify = FALSE
+                  )
+                  
+                  effect_size2_df <- data.table::rbindlist(effect_size2)
+                  #effect_size2_output <- data.frame(t(effect_size2)) ## When simplify is TRUE
+                  #effect_size2_df <- effect_size2_output %>% tidyr::unnest() ## When simplify is TRUE
+                  
+                  effect_size2_df$outcome <- nn
+                  effect_size2_df$type <- "kruskal-wallis"
+                  effect_size2_df$variables <- numeric_integer_vars
+                  
+                }
                 
                 effect_size_df <- effect_size2_df %>%
                   tibble::remove_rownames() %>%

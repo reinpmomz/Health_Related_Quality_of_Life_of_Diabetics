@@ -10,7 +10,7 @@ multivariate_analysis_model <- sapply(outcome_vars, function(x){
   ## Set seed for reproducibility
   set.seed(seed_models)
   
-  df_new <- df_drop_corr
+  df_new <- df_drop_missing
   
   model <- betareg::betareg(model_form[[x]], data = df_new, 
                             link = "logit",

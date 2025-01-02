@@ -15,7 +15,7 @@ multivariate_analysis_var_imp <- sapply(outcome_vars, function(x){
   ## Set seed for reproducibility
   set.seed(seed_varimp)
   
-  df_new <- df_drop_corr
+  df_new <- df_drop_missing
   
   test_df <- df_new[, colnames(df_new)[!colnames(df_new) %in% outcome_vars]]
   y_test <- df_new[[x]]
@@ -57,7 +57,7 @@ multivariate_analysis_var_imp <- sapply(outcome_vars, function(x){
 
 multivariate_analysis_var_imp_plot <- sapply(outcome_vars, function(x){
   
-  df_new <- df_drop_corr
+  df_new <- df_drop_missing
   test_df <- df_new[, colnames(df_new)[!colnames(df_new) %in% outcome_vars]]
   
   ## Creating a named vector to quickly rename levels

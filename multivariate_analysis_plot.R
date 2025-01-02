@@ -12,7 +12,7 @@ working_directory
 ## Regression plot
 multivariate_analysis_plot <- sapply(outcome_vars, function(x){
   
-  df_new <- df_drop_corr
+  df_new <- df_drop_missing
   
   ## Creating a named vector to quickly rename levels
   new_levels <- selected_vars_df %>%
