@@ -3,8 +3,6 @@ library(stringr)
 library(tidyselect)
 library(tibble)
 
-working_directory
-
 #Coalesce Multiple Columns in svenhalvorson/SvenR
 
 coalesce_multi = function(

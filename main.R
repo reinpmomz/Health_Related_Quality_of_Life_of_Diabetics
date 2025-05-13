@@ -19,12 +19,15 @@ if ( length(Rdata_files) >0) {
 source("requirements.R")
 
 ### helper/customized functions
-source("helperfuns_1.R")
-source("helperfuns_2.R")
-source("helperfuns_plots_3.R")
-source("helperfuns_plots_4.R")
-source("helperfuns_5.R")
-source("helperfuns_6.R")
+source("helperfuns_read_excel_sheets.R")
+source("helperfuns_gt_summary_themes.R")
+source("helperfuns_table_summary_categorical.R")
+source("helperfuns_table_summary_continous.R")
+source("helperfuns_ggplot_themes.R")
+source("helperfuns_simple_plots.R")
+source("helperfuns_multiple_response_plots.R")
+source("helperfuns_effect_size.R")
+source("helperfuns_coallesce_columns.R")
 
 ### Load data 
 #source("load_data_drive.R")
