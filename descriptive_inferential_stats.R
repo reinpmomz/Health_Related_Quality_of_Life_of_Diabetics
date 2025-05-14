@@ -13,7 +13,7 @@ strata_vars <- c("wdf_q2_1")
 descriptive_stats <- descriptive_table(df = df_analysis,
                                        foot_note = "n (%); Mean (SD); Median (IQR); Range",
                                        caption = "Descriptive Statistics",
-                                       include = names(df_analysis),
+                                       include_vars = names(df_analysis),
                                        continous_digits = 2,
                                        mean_vars = c("overall_qol_transformed", "wdf_q3_18", "wdf_q3_20",
                                                      "wdf_q3_33", "wdf_q3_36", "wdf_q3_39","wdf_q3_42", "wdf_q3_45",
@@ -35,7 +35,7 @@ inferential_stats <-
                                 by_vars = inferential_vars[!(inferential_vars %in% outcome_vars)],
                                 foot_note = "n (%); Mean (SD); Median (IQR); Range",
                                 caption = "Inferential Statistics",
-                                include = names(df_analysis),
+                                include_vars = names(df_analysis),
                                 continous_digits = 2,
                                 percent = "column", #default
                                 p_value = TRUE, #default
@@ -47,6 +47,39 @@ inferential_stats <-
                                 flex_table = FALSE
                                 )
 print(inferential_stats)
+
+## Inferential statistics - Healthy eating habits and regular physical activity 
+inferential_eating_stats <- categorical_inferential_table(df = df_analysis,
+                                by_vars = c("healthy_eating_index"),
+                                foot_note = "n (%); Mean (SD); Median (IQR); Range",
+                                caption = "Inferential Statistics",
+                                include_vars = health_eating_vars,
+                                continous_digits = 2,
+                                percent = "column", #default
+                                p_value = TRUE, #default
+                                mean_vars = c("wdf_q3_18", "wdf_q3_20"),
+                                flex_table = TRUE
+                                )
+
+print(inferential_eating_stats)
+
+inferential_physical_activity_stats <- 
+  categorical_inferential_table(df = df_analysis,
+                                by_vars = c("regular_physical_activity_index"),
+                                foot_note = "n (%); Mean (SD); Median (IQR); Range",
+                                caption = "Inferential Statistics",
+                                include_vars = exercise_vars,
+                                continous_digits = 2,
+                                percent = "column", #default
+                                p_value = TRUE, #default
+                                mean_vars = c("wdf_q3_33", "wdf_q3_36", "wdf_q3_39","wdf_q3_42", "wdf_q3_45",
+                                              "wdf_q3_34a_b_hours", "wdf_q3_37a_b_hours", "wdf_q3_40a_b_hours",
+                                              "wdf_q3_43a_b_hours", "wdf_q3_46a_b_hours"
+                                              ),
+                                flex_table = TRUE
+                                )
+
+print(inferential_physical_activity_stats)
 
 ## Inferential statistics - Anova
 inferential_anova_stats <- if (length(outcome_vars)>0) {
