@@ -14,7 +14,6 @@ descriptive_stats <- descriptive_table(df = df_analysis,
                                        foot_note = "n (%); Mean (SD); Median (IQR); Range",
                                        caption = "Descriptive Statistics",
                                        include_vars = names(df_analysis),
-                                       continous_digits = 2,
                                        mean_vars = c("overall_qol_transformed", "wdf_q3_18", "wdf_q3_20",
                                                      "wdf_q3_33", "wdf_q3_36", "wdf_q3_39","wdf_q3_42", "wdf_q3_45",
                                                      "wdf_q3_34a_b_hours", "wdf_q3_37a_b_hours", "wdf_q3_40a_b_hours",
@@ -36,7 +35,6 @@ inferential_stats <-
                                 foot_note = "n (%); Mean (SD); Median (IQR); Range",
                                 caption = "Inferential Statistics",
                                 include_vars = names(df_analysis),
-                                continous_digits = 2,
                                 percent = "column", #default
                                 p_value = TRUE, #default
                                 mean_vars = c("overall_qol_transformed", "wdf_q3_18", "wdf_q3_20",
@@ -54,7 +52,6 @@ inferential_eating_stats <- categorical_inferential_table(df = df_analysis,
                                 foot_note = "n (%); Mean (SD); Median (IQR); Range",
                                 caption = "Inferential Statistics",
                                 include_vars = health_eating_vars,
-                                continous_digits = 2,
                                 percent = "column", #default
                                 p_value = TRUE, #default
                                 mean_vars = c("wdf_q3_18", "wdf_q3_20"),
@@ -69,7 +66,6 @@ inferential_physical_activity_stats <-
                                 foot_note = "n (%); Mean (SD); Median (IQR); Range",
                                 caption = "Inferential Statistics",
                                 include_vars = exercise_vars,
-                                continous_digits = 2,
                                 percent = "column", #default
                                 p_value = TRUE, #default
                                 mean_vars = c("wdf_q3_33", "wdf_q3_36", "wdf_q3_39","wdf_q3_42", "wdf_q3_45",
@@ -99,7 +95,6 @@ inferential_anova_stats <- if (length(outcome_vars)>0) {
                         foot_note = "Mean (SD)",
                         caption = "",
                         continous_var = z,
-                        continous_digits = 2,
                         p_value = TRUE,
                         display_mean = TRUE,
                         flex_table = FALSE
@@ -117,7 +112,6 @@ inferential_anova_stats <- if (length(outcome_vars)>0) {
                              caption = "",
                              continous_var = y,
                              by_vars = index,
-                             continous_digits = 2,
                              p_value = TRUE,
                              display_mean = TRUE,
                              flex_table = FALSE
@@ -137,7 +131,6 @@ inferential_anova_stats <- if (length(outcome_vars)>0) {
                                   foot_note = "n (%); Mean (SD); Median (IQR); Range",
                                   caption = "Inferential Statistics",
                                   include = names(df_analysis),
-                                  continous_digits = 2,
                                   percent = "column", #default
                                   p_value = TRUE, #default
                                   mean_vars = c("overall_qol_transformed", "wdf_q3_18", "wdf_q3_20",

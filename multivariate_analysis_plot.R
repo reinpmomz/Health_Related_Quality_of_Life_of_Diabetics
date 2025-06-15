@@ -21,6 +21,7 @@ multivariate_analysis_plot <- sapply(outcome_vars, function(x){
     dplyr::filter(new_variable %in% names(df_new)) %>%
     tibble::deframe()
   
+  #Get model metrics as a vector
   model_metrics <- bind_rows(broom::glance(multivariate_analysis_model[[x]]) %>%
                                dplyr::mutate(across(!starts_with("df"), ~round(.x, 3))) %>%
                                tidyr::pivot_longer(everything()),
@@ -33,6 +34,7 @@ multivariate_analysis_plot <- sapply(outcome_vars, function(x){
     dplyr::mutate(name_value = paste0(name, " = ", value)) %>%
     dplyr::pull(name_value)
   
+  # model estimates table
   model_table <- broom::tidy(x = multivariate_analysis_model[[x]]) %>%
     dplyr::mutate(p.value = round(p.value, 3)
                   , p_value = ifelse(p.value < 0.001, "<0.001", p.value)
@@ -46,7 +48,7 @@ multivariate_analysis_plot <- sapply(outcome_vars, function(x){
                   , term_label = if_else(is.na(term_label),variable_label ,term_label)
                   , model = "beta"
                   ) 
-    
+    #Get Intercept metrics as a vector
   model_table_metrics <- model_table %>%
     dplyr::filter(is.na(variable_name)) %>%
     dplyr::mutate(across(!starts_with("p") & where(is.numeric), ~round(.x, 3))
@@ -80,7 +82,7 @@ multivariate_analysis_plot <- sapply(outcome_vars, function(x){
     coord_flip() +
     geom_hline(yintercept = 0, colour = "grey60", linetype = 2) +
     labs(x=NULL,y="Beta Coefficients (95% CI)", colour = "", title = ""
-         #, caption = stringr::str_wrap(paste0(c(model_metrics, model_table_metrics), collapse = "; "), width = 95)
+         , caption = stringr::str_wrap(paste0(c(model_metrics, model_table_metrics), collapse = "; "), width = 95)
          ) +
     scale_x_discrete(labels = function(x) stringr::str_wrap(x, width = 60)) +
     scale_y_continuous( n.breaks = 10)

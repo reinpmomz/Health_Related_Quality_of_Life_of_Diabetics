@@ -28,7 +28,7 @@ residuals_base_plots <-  sapply(unique(base_residuals_all_df$analysis_name), fun
   
   plot1 <- plot +
     geom_hline(yintercept = 0, colour = "darkgrey", linetype = 2) +
-    scale_x_continuous(n.breaks = 10) +
+    scale_x_continuous(n.breaks = 6) +
     #scale_y_continuous(n.breaks = 5) +
     facet_wrap(analysis_name~label_R2, scales="fixed", ncol = 5, 
                labeller = labeller(.default = label_value, .multi_line = FALSE)) + 
