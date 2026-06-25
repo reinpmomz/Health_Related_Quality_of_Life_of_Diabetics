@@ -9,6 +9,7 @@ working_directory
 ### descriptive stats
 
 flextable::save_as_docx(descriptive_inferential_stats_merge, descriptive_inferential_anova_stats_merge,
+                        inferential_eating_stats[[1]], inferential_physical_activity_stats[[1]],
                         path = base::file.path(output_Dir, "descriptive_inferential_stats.docx"),
                         align = "center", #left, center (default) or right.
                         pr_section = officer::prop_section(

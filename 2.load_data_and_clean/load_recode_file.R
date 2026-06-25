@@ -6,7 +6,7 @@ working_directory
 
 ## Reading the recode file sheet
 
-recode_file <- read_excel_allsheets("wdf_baseline_recode_file.xlsx")
+recode_file <- read_excel_allsheets("./2.load_data_and_clean/wdf_baseline_recode_file.xlsx")
 
 rename_vars_df <- recode_file[["rename_vars"]] #df for renaming variable labels
 
